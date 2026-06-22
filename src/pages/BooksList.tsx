@@ -57,71 +57,73 @@ export function BooksList(){
                 <Spinner className="size-8"/>
             </div>
         ) : (
-            <Card className="p-8 max-h-200 overflow-y-auto">
-                <CardTitle className="text-xl mb-4">Livros</CardTitle>
-                <CardContent>
-                <div className="rounded-md border overflow-hidden">
-                    <Table className="bg-[#181C2A]">
-                        <TableHeader className="sticky top-0 bg-[#181C2A] z-10">
-                            <TableRow>
-                                <TableHead></TableHead>
-                                <TableHead className="text-[#E6E8F2]">ISBN</TableHead>
-                                <TableHead className="text-[#E6E8F2]">Título</TableHead>
-                                <TableHead className="text-[#E6E8F2]">Autor</TableHead>
-                                <TableHead className="text-[#E6E8F2]">Quantidade</TableHead>
-                                <TableHead className="text-[#E6E8F2]">Ano de Publicação</TableHead>
-                                <TableHead></TableHead>
-                                <TableHead></TableHead>
-                                <TableHead></TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {
-                                bookList && bookList.map((book) => {
+            <div className="flex items-start">
+                <Card className="p-8 max-h-200 overflow-y-auto">
+                    <CardTitle className="text-xl mb-4">Livros</CardTitle>
+                    <CardContent>
+                    <div className="rounded-md border overflow-hidden">
+                        <Table className="bg-[#181C2A]">
+                            <TableHeader className="sticky top-0 bg-[#181C2A] z-10">
+                                <TableRow>
+                                    <TableHead></TableHead>
+                                    <TableHead className="text-[#E6E8F2]">ISBN</TableHead>
+                                    <TableHead className="text-[#E6E8F2]">Título</TableHead>
+                                    <TableHead className="text-[#E6E8F2]">Autor</TableHead>
+                                    <TableHead className="text-[#E6E8F2]">Quantidade</TableHead>
+                                    <TableHead className="text-[#E6E8F2]">Ano de Publicação</TableHead>
+                                    <TableHead></TableHead>
+                                    <TableHead></TableHead>
+                                    <TableHead></TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {
+                                    bookList && bookList.map((book) => {
 
-                                    return (
-                                        <TableRow key={book.isbn}>
-                                            <TableCell className="mr-auto">
-                                                <BookCover size="S" src={book.coverUrl} />
-                                            </TableCell>
-                                            <TableCell>{book.isbn}</TableCell>
-                                            <TableCell>{book.title}</TableCell>
-                                            <TableCell>{book.author}</TableCell>
-                                            <TableCell>{book.quantity}</TableCell>
-                                            <TableCell>{book.publishYear}</TableCell>
+                                        return (
+                                            <TableRow key={book.isbn}>
+                                                <TableCell className="mr-auto">
+                                                    <BookCover size="S" src={book.coverUrl} />
+                                                </TableCell>
+                                                <TableCell>{book.isbn}</TableCell>
+                                                <TableCell>{book.title}</TableCell>
+                                                <TableCell>{book.author}</TableCell>
+                                                <TableCell>{book.quantity}</TableCell>
+                                                <TableCell>{book.publishYear}</TableCell>
 
-                                            <TableCell>
-                                                <BorrowDialog isbn={book.isbn}>
-                                                    <Button  className="cursor-pointer">
-                                                        <BookMinus/>
-                                                    </Button>
-                                                </BorrowDialog>
-                                            </TableCell>
+                                                <TableCell>
+                                                    <BorrowDialog isbn={book.isbn}>
+                                                        <Button  className="cursor-pointer">
+                                                            <BookMinus/>
+                                                        </Button>
+                                                    </BorrowDialog>
+                                                </TableCell>
 
-                                            <TableCell>
-                                                <BorrowDialog devolution isbn={book.isbn}>
-                                                    <Button className="cursor-pointer">
-                                                        <BookPlus/>
-                                                    </Button>
-                                                </BorrowDialog>
-                                            </TableCell>
+                                                <TableCell>
+                                                    <BorrowDialog devolution isbn={book.isbn}>
+                                                        <Button className="cursor-pointer">
+                                                            <BookPlus/>
+                                                        </Button>
+                                                    </BorrowDialog>
+                                                </TableCell>
 
-                                            <TableCell>
-                                                <DeleteBookDialog isbn={book.isbn} deleteBook={handleDeleteBook}>
-                                                    <Button className="cursor-pointer text-red-400" >
-                                                        <Trash/>
-                                                    </Button>
-                                                </DeleteBookDialog>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            }
-                        </TableBody>
-                    </Table>
-                </div>
-                </CardContent>
-            </Card>
+                                                <TableCell>
+                                                    <DeleteBookDialog isbn={book.isbn} deleteBook={handleDeleteBook}>
+                                                        <Button className="cursor-pointer text-red-400" >
+                                                            <Trash/>
+                                                        </Button>
+                                                    </DeleteBookDialog>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    })
+                                }
+                            </TableBody>
+                        </Table>
+                    </div>
+                    </CardContent>
+                </Card>
+            </div>
         )
        }
     </>

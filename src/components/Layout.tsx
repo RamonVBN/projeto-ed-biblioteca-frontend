@@ -45,14 +45,16 @@ export function Layout(){
             h-full rounded-lg shadow-2xl text-[#F8F9FC] w-1/5 p-5 pt-8 flex flex-col items-center ">
 
                 <div className="flex gap-3 items-center">
-                    <BookOpen/>
-                    <h1 className="text-xl" >Biblioteca Virtual</h1>
+                    {/* <BookOpen/>
+                    <h1 className="text-xl" >Biblioteca Virtual</h1> */}
+                    <img className="w-60 mb-auto" src="/logo.png" alt="" />
                 </div>
-                <nav className="flex flex-col h-full gap-4 mt-10 text-[#8D95AF]">
+                <nav className="flex flex-col h-full gap-4 mt-2 text-[#8D95AF]">
                     <Button 
                     asChild
                     variant={'ghost'} 
-                    className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/' ? ' text-[#F8F9FC]' : ""}`}
+                    className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] 
+                        ${pathname === '/' ? ' text-[#F8F9FC]' : ""}`}
                     >
                         <Link to={'/'}>
                             <LayoutDashboard/>
@@ -63,7 +65,8 @@ export function Layout(){
                      <Button 
                      asChild
                      variant={'ghost'} 
-                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/books' ? ' text-[#F8F9FC]' : ""}`}
+                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] 
+                        ${pathname === '/books' ? ' text-[#F8F9FC]' : ""}`}
                      >
                         
                         <Link to="/books">
@@ -75,7 +78,8 @@ export function Layout(){
                      <Button 
                      asChild
                      variant={'ghost'} 
-                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/register' ? ' text-[#F8F9FC]' : ""}`}
+                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] 
+                        ${pathname === '/register' ? ' text-[#F8F9FC]' : ""}`}
                      >
                         <Link to="/register">
                             <BookmarkPlus/>
@@ -86,7 +90,8 @@ export function Layout(){
                      <Button 
                      asChild
                      variant={'ghost'} 
-                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/search' ? ' text-[#F8F9FC]' : ""}`}
+                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] 
+                        ${pathname === '/search' ? ' text-[#F8F9FC]' : ""}`}
                      >
                        
                         <Link to="/search">
@@ -98,7 +103,7 @@ export function Layout(){
             </div>
             
             <QueryClientProvider client={queryClient}>
-                <Toaster />
+                <Toaster richColors/>
                 <main className="h-full w-full bg-zinc-850 flex px-12 py-13 justify-center">
                     <Outlet/>
                 </main>

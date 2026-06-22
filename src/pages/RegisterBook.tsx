@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Field, FieldError, FieldLabel } from "../components/ui/field"
+import { toast } from "sonner"
 
 const registerBookFormSchema = z.object({
   title: z.string(),
@@ -45,6 +46,7 @@ export function RegisterBook() {
     })
 
     reset()
+    toast.success('Livro cadastrado com sucesso.')
   }
 
   return (

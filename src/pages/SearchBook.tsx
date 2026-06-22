@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 const searchBookFormSchema = z.object({
@@ -45,6 +46,8 @@ export function SearchBook(){
             const book =  response.data.book
             
             if (!book){
+
+                toast.error('Livro não encontrado.')
                 return
             }
 
