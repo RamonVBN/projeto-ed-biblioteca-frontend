@@ -60,8 +60,10 @@ export function BorrowDialog({ children, isbn, devolution=false }: BorrowDialogP
 
         setIsBorrowBookDialogOpen(false)
         reset()
-    }
 
+        toast.success("Livro devolvido com sucesso.")
+    }
+    
     return (
         <Dialog open={isBorrowBookDialogOpen} onOpenChange={setIsBorrowBookDialogOpen}>
             <DialogTrigger asChild>
