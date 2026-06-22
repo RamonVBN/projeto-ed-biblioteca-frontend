@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { BooksList } from "@/pages/BooksList";
-import { Home } from "@/pages/Home";
+import { Dashboard } from "@/pages/Dashboard";
 import { NotFound } from "@/pages/NotFound";
 import { RegisterBook } from "@/pages/RegisterBook";
 import { SearchBook } from "@/pages/SearchBook";
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Dashboard />,
       },
       {
         path: "books",

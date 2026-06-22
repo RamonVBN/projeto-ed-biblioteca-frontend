@@ -1,4 +1,5 @@
 import type { Book } from "@/@types/query";
+import { BookCover } from "@/components/BookCover";
 import { BorrowDialog } from "@/components/BorrowDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -7,10 +8,10 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/libs/axios";
 import { getBookCover } from "@/utils/getBookCover";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-
 
 const searchBookFormSchema = z.object({
     isbn: z.string()
@@ -18,10 +19,9 @@ const searchBookFormSchema = z.object({
 
 type searchBookFormData = z.infer<typeof searchBookFormSchema>
 
-
 export function SearchBook(){
 
-    const [searchedBook, setSearchedBook] = useState<Book | null>(null)
+    const [isbn, setIsbn] = useState("")
 
     const {
         register,
@@ -32,67 +32,74 @@ export function SearchBook(){
 
     async function handleSearchBook(data: searchBookFormData){
 
-        const response = await api.get(`/buscar/${data.isbn}`)
-
-        const book =  response.data.book
-        const message = response.data.message
-
-        if (!book){
-            return
-        }
-
-        const coverUrl = await getBookCover({isbn: data.isbn, size: 'M'})
-
-        return setSearchedBook({
-            title: book.titulo,
-            author: book.autor,
-            isbn: book.isbn,
-            publishYear: book.ano_pub,
-            quantity: book.qtd_ex,
-            coverUrl
-        })
+       setIsbn(data.isbn)
     }
 
+    const { data: searchedBook } = useQuery<Book | undefined>({
+
+        queryKey: ['books', isbn],
+        enabled: isbn.length > 0,
+        queryFn: async () => {
+            const response = await api.get(`/buscar/${isbn}`)
+
+            const book =  response.data.book
+            
+            if (!book){
+                return
+            }
+
+            const coverUrl = await getBookCover({isbn, size: 'M'})
+
+            return {
+                title: book.titulo,
+                author: book.autor,
+                isbn: book.isbn,
+                publishYear: book.ano_pub,
+                quantity: book.qtd_ex,
+                coverUrl
+            }
+        }
+    })
 
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 min-w-125">
             <Card className="p-8">
-                <CardTitle>Buscar livro</CardTitle>
+                <CardTitle className="text-xl">Buscar livro</CardTitle>
 
-                <CardContent>
+                <CardContent >
                     <form className="flex gap-4" onSubmit={handleSubmit(handleSearchBook)}>
                         <Field>
                             <FieldLabel htmlFor="isbn">ISBN</FieldLabel>
                             <Input id="isbn" {...register("isbn")} />
                         </Field>
 
-                        <Button className="cursor-pointer self-end">Buscar</Button>
+                        <Button className="cursor-pointer self-end bg-[#252D4A]">Buscar</Button>
                     </form>
                 </CardContent>
             </Card>
 
             {
                 searchedBook && (
-                <Card className="p-8 w-125">
+                <Card className="p-8">
                     
-                    <div className="w-full flex justify-between">
-                        <CardTitle className="text-xl">Livro encontrado</CardTitle>
+                    <div className="w-full flex justify-between mb-3">
+                        <CardTitle className="text-[18px]">Livro encontrado</CardTitle>
                         
                         <div className="flex gap-1">
 
                             <BorrowDialog devolution isbn={searchedBook.isbn}>
-                                <Button size={'lg'} className="cursor-pointer">Devolver</Button>
+                                <Button size={'lg'} >Devolver</Button>
                             </BorrowDialog>
 
                             <BorrowDialog isbn={searchedBook.isbn}>
-                                <Button size={'lg'} className="cursor-pointer">Emprestar</Button>
+                                <Button size={'lg'} >Emprestar</Button>
                             </BorrowDialog>
                         </div>
                     </div>
                 
                     <CardContent className="flex gap-4 p-0">
-
-                        <img src={searchedBook.coverUrl} alt="" className="justify-self-start" />
+                        
+                        <BookCover src={searchedBook.coverUrl}/>
 
                         <div className=" flex flex-col justify-between w-full">
                             <div className="flex flex-col">

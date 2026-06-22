@@ -84,7 +84,7 @@ export function BorrowDialog({ children, isbn, devolution=false }: BorrowDialogP
 
                 <form onSubmit={handleSubmit(devolution ? handleReturnBook :handleBorrowBook)} className="flex gap-3">
                     <Field>
-                        <FieldLabel htmlFor="title">Mutuário</FieldLabel>
+                        <FieldLabel htmlFor="title">Solicitante</FieldLabel>
                         <Input id="name" {...register("name")} />
                     </Field>
 

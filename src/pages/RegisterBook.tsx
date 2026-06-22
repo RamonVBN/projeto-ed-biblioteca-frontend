@@ -50,7 +50,7 @@ export function RegisterBook() {
   return (
     <div>
       <Card className="p-8">
-        <CardTitle>Cadastrar livro</CardTitle>
+        <CardTitle className="text-xl">Cadastrar livro</CardTitle>
 
         <CardContent>
           <form

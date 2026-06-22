@@ -1,57 +1,108 @@
 import { api } from "@/libs/axios";
-import { BookOpen } from "lucide-react";
+import { BookmarkPlus, BookOpen, BookSearch, LayoutDashboard, LibraryBig } from "lucide-react";
 import { Outlet, Link } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner"
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { Button } from "./ui/button";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
+const queryClient = new QueryClient()
 
 export function Layout(){
-
+    
+    const { pathname } = useLocation()
 
     async function setInitialMockData() {
         await api.get('/mock')
     }
 
-    // useEffect(() => {
-    //    setInitialMockData()
-    // }, [])
+    useEffect(() => {
+       setInitialMockData()
+    }, [])
 
     return (
         
-        <div className="w-screen h-screen bg-zinc-900 text-gray-200 flex">
+        <div className="w-screen h-screen bg-[#0E1116] text-gray-200 flex py-5 pl-5">
 
-            <div className="h-full bg-zinc-50 w-1/5 p-5 pt-8 flex flex-col items-center text-zinc-950">
+            <div 
+            className="
+             relative
+            bg-[#0B1120]
+            before:content-['']
+            before:absolute
+            before:inset-0
+            before:z-0
+            before:opacity-75
+            before:blur-[160px]
+            before:bg-[radial-gradient(circle_at_30%_5%,rgba(129,140,248,0.40),transparent_45%),radial-gradient(circle_at_75%_10%,rgba(168,85,247,0.35),transparent_50%),radial-gradient(circle_at_20%_55%,rgba(56,189,248,0.25),transparent_55%),radial-gradient(circle_at_40%_90%,rgba(16,185,129,0.20),transparent_50%)]
 
-                <div className="flex gap-3">
+            *:relative
+            *:z-10
+            h-full rounded-lg shadow-2xl text-[#F8F9FC] w-1/5 p-5 pt-8 flex flex-col items-center ">
+
+                <div className="flex gap-3 items-center">
                     <BookOpen/>
-                    <h1>Biblioteca Virtual</h1>
+                    <h1 className="text-xl" >Biblioteca Virtual</h1>
                 </div>
-                <nav className="flex flex-col h-full gap-4 mt-5">
-                    <button className="flex gap-3">
-                        <Link to={'/'}>Dashboard</Link>
-                    </button>
+                <nav className="flex flex-col h-full gap-4 mt-10 text-[#8D95AF]">
+                    <Button 
+                    asChild
+                    variant={'ghost'} 
+                    className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/' ? ' text-[#F8F9FC]' : ""}`}
+                    >
+                        <Link to={'/'}>
+                            <LayoutDashboard/>
+                            Dashboard
+                        </Link>
+                    </Button>
 
-                     <button>
-                        <Link to="/books">Livros</Link>
-                    </button>
+                     <Button 
+                     asChild
+                     variant={'ghost'} 
+                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/books' ? ' text-[#F8F9FC]' : ""}`}
+                     >
+                        
+                        <Link to="/books">
+                            <LibraryBig/>
+                            Livros
+                        </Link>
+                    </Button>
 
-                     <button>
-                        <Link to="/register">Cadastrar</Link>
-                    </button>
+                     <Button 
+                     asChild
+                     variant={'ghost'} 
+                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/register' ? ' text-[#F8F9FC]' : ""}`}
+                     >
+                        <Link to="/register">
+                            <BookmarkPlus/>
+                            Cadastrar
+                        </Link>
+                    </Button>
 
-                     <button>
-                        <Link to="/search">Buscar</Link>
-                    </button>
-
-                     {/* <button>
-                        <Link href="">Empréstimos</a>
-                    </button> */}
+                     <Button 
+                     asChild
+                     variant={'ghost'} 
+                     className={`flex gap-3 justify-start text-base hover:text-[#F8F9FC] hover:bg-[#181C2A] ${pathname === '/search' ? ' text-[#F8F9FC]' : ""}`}
+                     >
+                       
+                        <Link to="/search">
+                            <BookSearch/>
+                            Buscar
+                        </Link>
+                    </Button>
                 </nav>
             </div>
-                    
-            <Toaster />
-            <main className="h-full w-full bg-zinc-850 flex items-center justify-center ">
-                <Outlet/>
-            </main>
+            
+            <QueryClientProvider client={queryClient}>
+                <Toaster />
+                <main className="h-full w-full bg-zinc-850 flex px-12 py-13 justify-center">
+                    <Outlet/>
+                </main>
+            </QueryClientProvider>
         </div>
     )
 }

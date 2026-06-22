@@ -31,7 +31,7 @@ export function DeleteBookDialog({ children, isbn, deleteBook }: DeleteBookDialo
                 </DialogHeader>
 
                     <div className="w-full flex justify-center gap-2">
-                        <Button onClick={() => onDeleteBook()} size={'lg'} className="bg-red-700 hover:bg-red-400 transition-all ease-in cursor-pointer">Excluir</Button>
+                        <Button onClick={() => onDeleteBook()} size={'lg'} className="bg-red-500 hover:bg-red-400 transition-all ease-in cursor-pointer">Excluir</Button>
                         <Button onClick={() => setIsDeleteBookDialogOpen(false)} size={'lg'} className="cursor-pointer transition-all ease-in">Cancelar</Button>
                     </div>
             </DialogContent>
